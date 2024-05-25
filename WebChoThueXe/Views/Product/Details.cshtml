@@ -1,0 +1,590 @@
+﻿@model ProductDetailViewModel
+
+<link href="~/css/Views/productDetail.css" rel="stylesheet">
+
+
+<div class="row">
+   <div class="col-sm-9 padding-right">
+      <div class="product-details">
+         <div class="box_main">
+            <div class="box_left">
+               <div class="box01 ">
+                  <div class="box01__show">
+                     <div class="show-tab active" data-gallery-id="featured-images-gallery" data-color-id="0">
+                        <div class="detail-slider owl-carousel owl-loaded owl-drag">
+                           <div class="owl-stage-outer owl-height" style="height: 396.75px;">
+                              <div class="owl-stage" >
+                                 <div class="owl-item active" style="width: 710px;">
+                                     <img src="~/media/products/@Model.ProductDetail?.Image" style="border-radius: 5px;">
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="box-available"></div>
+            </div>
+            <div class="box_right">
+                <div class="row">
+                        <div class="scrolling_inner col-md-6">
+                        Thương hiệu
+                        <div class="box03 group desk">
+                            <a class="box03__item item ">@Model.ProductDetail?.BrandName</a>
+                        </div>
+                    </div>
+                    <div class="scrolling_inner col-md-6">
+                        Danh mục
+                        <div class="box03 color group desk">
+                            <a class="box03__item item ">@Model.ProductDetail?.CategoryName</a>
+                        </div>
+                    </div>
+                </div>
+               
+               
+              <div class="article content-t-wrap">
+                 <div class="article__content short">
+                    <h3 class="article__content__title">Thông tin sản phẩm</h3>
+                    <div class="content-article">
+                       @Model.ProductDetail?.Description
+                    </div>
+                 </div>
+              </div>
+
+               <div class="box_saving v2 olgr  twoprice">
+                  <div class="bs_title">
+                     <div class="bs_price">
+                        <strong>@Html.Raw(string.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:C0}", Model.ProductDetail?.Price)) VND</strong>
+                        <em>@Html.Raw(string.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:C0}", Model.ProductDetail?.Price)) VND</em>
+                        <i>(-16%)</i>
+                     </div>
+                  </div>
+               </div>
+               <div class="block-button twoprice d-flex">
+                   <a class="btn-buynow buynow red jsBuy twoprice" asp-action="BuyNow" asp-controller="Cart" asp-route-Id="@Model.ProductDetail?.Id">
+                        MUA NGAY
+                   </a>
+                   <a class="btn-buynow add-card red jsBuy twoprice" asp-action="Add" asp-controller="Cart" asp-route-Id="@Model.ProductDetail?.Id">
+                        Thêm vào giỏ
+                   </a>
+               </div>
+            </div>
+         </div>
+         <div class="border7"></div>
+      </div>
+      <div class="wrap_rating wrap_border">
+         <div class=" bg-coverrate"></div>
+         <div class="rating-topzone rc-tgdd">
+            @if (Model.RatingInfor == null || Model.RatingInfor.TotalRate == 0)
+            {
+             <div class="rating-topzonecr-uncmt">
+                <h2 class="rating-topzonecr-title">
+                    Đánh giá sản phẩm này
+                </h2>
+                <h3>Nếu đã mua sản phẩm này, hãy đánh giá ngay để giúp hàng ngàn người chọn mua hàng tốt nhất bạn nhé!</h3>
+                <div class="dcap rate-topzone">
+                    <div class="c-btn-rate btn-write" data-toggle="modal" data-target="#modalRate">Đánh giá</div>
+                </div>
+            </div>       
+            }
+            else
+            {
+                <div class="rating-topzonecmt-hascmt">
+                    <div class="boxrate rate-topzone">
+                        <h2 class="boxrate__title">Đánh giá @Model.ProductDetail?.Name</h2>
+                        <div class="boxrate__top">
+                            <div class="box-star">
+                            <div class="point">
+                                <p>@Model.RatingInfor.Star</p>
+                                <i class="@(Model.RatingInfor.Star >= 1 ? "iconcmt-allstar": Model.RatingInfor.Star > 0 && Model.RatingInfor.Star < 1? "iconcmt-allhalfstar": "iconcmt-allunstar")"></i>
+                                <i class="@(Model.RatingInfor.Star >= 2 ? "iconcmt-allstar": Model.RatingInfor.Star > 1 && Model.RatingInfor.Star < 2? "iconcmt-allhalfstar": "iconcmt-allunstar")"></i>
+                                <i class="@(Model.RatingInfor.Star >= 3 ? "iconcmt-allstar": Model.RatingInfor.Star > 2 && Model.RatingInfor.Star < 3? "iconcmt-allhalfstar": "iconcmt-allunstar")"></i>
+                                <i class="@(Model.RatingInfor.Star >= 4 ? "iconcmt-allstar": Model.RatingInfor.Star > 3 && Model.RatingInfor.Star < 4? "iconcmt-allhalfstar": "iconcmt-allunstar")"></i>
+                                <i class="@(Model.RatingInfor.Star >= 5 ? "iconcmt-allstar": Model.RatingInfor.Star > 4 && Model.RatingInfor.Star < 5? "iconcmt-allhalfstar": "iconcmt-allunstar")"></i>
+                                <a style="cursor: pointer" class="total-cmtrt">@Model.RatingInfor.TotalRate đánh giá </a>
+                            </div>
+                            <ul class="rate-list">
+                                <li>
+                                    <div class="number-star">
+                                        5<i class="iconcmt-blackstar"></i>
+                                    </div>
+                                    <div class="timeline-star">
+                                        <p class="timing" style="width: @Model.RatingInfor.PercentStar5%"></p>
+                                    </div>
+                                    <span class="number-percent">@Model.RatingInfor.PercentStar5 %</span>
+                                </li>
+                                <li>
+                                    <div class="number-star">
+                                        4<i class="iconcmt-blackstar"></i>
+                                    </div>
+                                    <div class="timeline-star">
+                                        <p class="timing" style="width: @Model.RatingInfor.PercentStar4%"></p>
+                                    </div>
+                                    <span class="number-percent">@Model.RatingInfor.PercentStar4 %</span>
+                                </li>
+                                <li>
+                                    <div class="number-star">
+                                        3<i class="iconcmt-blackstar"></i>
+                                    </div>
+                                    <div class="timeline-star">
+                                        <p class="timing" style="width: @Model.RatingInfor.PercentStar3%"></p>
+                                    </div>
+                                    <p class="number-percent dsp">@Model.RatingInfor.PercentStar3 %</p>
+                                </li>
+                                <li>
+                                    <div class="number-star">
+                                        2<i class="iconcmt-blackstar"></i>
+                                    </div>
+                                    <div class="timeline-star">
+                                        <p class="timing" style="width: @Model.RatingInfor.PercentStar2%"></p>
+                                    </div>
+                                    <p class="number-percent dsp">@Model.RatingInfor.PercentStar2 %</p>
+                                </li>
+                                <li>
+                                    <div class="number-star">  
+                                        1<i class="iconcmt-blackstar"></i>
+                                    </div>
+                                    <div class="timeline-star">
+                                        <p class="timing" style="width: @Model.RatingInfor.PercentStar1%"></p>
+                                    </div>
+                                    <p class="number-percent dsp">@Model.RatingInfor.PercentStar1 %</p>
+                                </li>
+                            </ul>
+                            </div>
+                            <div class="bgcover-errorForm"></div>
+                        </div>
+                        <div class="form-rate">
+                            <div class="c-btn-rate btn-write @(Model.RatingInfor.HasEnableRate? "disabled": "")" data-toggle="modal" data-target="#modalRate">Viết đánh giá</div>
+                        </div>
+                        @if (Model.RatingInfor.ListImg != null && Model.RatingInfor.ListImg.Count > 0)
+                        {
+                            <ul class="box-images-list">
+                                @for (int i = 0; i < Model.RatingInfor.ListImg.Count; i++)
+                                {
+                                    var item = Model.RatingInfor.ListImg[i];
+                                    <li>
+                                        <img loading="lazy" src="~/media/products/@item" alt="img">
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        
+                        <div class="boxrate__filter clearfix">
+                            <div class="filter-left">
+                                <p class="filter-title">Lọc đánh giá</p>
+                                <ul class="filter-list" data-star="0" data-checked="0">
+                                    <li data-star="0">
+                                        Tất cả
+                                    </li>
+                                    <li class="current" data-star="5">
+                                        5 <i class="iconcmt-starfilter-og"></i>
+                                    </li>
+                                    <li class="" data-star="4">
+                                        4 <i class="iconcmt-starfilter-og"></i>
+                                    </li>
+                                    <li data-star="3">
+                                        3 <i class="iconcmt-starfilter-og"></i>
+                                    </li>
+                                        <li data-star="2">
+                                        2 <i class="iconcmt-starfilter-og"></i>
+                                    </li>
+                                    <li data-star="1">
+                                        1 <i class="iconcmt-starfilter-og"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="rt-list">
+                            <ul class="comment-list">
+                            </ul>
+                            <div class="pgrc">
+                                <div class="pagcomment">
+
+                                </div></div>
+                            </div>
+                        </div>
+                    </div>
+            }
+            </div>
+            @* Form đánh giá *@
+            <div class="modal fade" id="modalRate" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="popup-rating-topzone" style="display: block;">
+                    <div class="close-rate" data-dismiss="modal"></div>
+                    <p class="txt">Đánh giá sản phẩm</p>
+                    <div class="bproduct">
+                        <div class="img">
+                            <img src="@Model.ProductDetail?.Image">
+                        </div>
+
+                        <h3>@Model.ProductDetail?.Name</h3>
+                    </div>
+                    <ul class="rating-topzonecr-star">
+                        <li data-val="1">
+                            <i class="iconcmt-unstarlist active"></i>
+                            <p data-val="1">Rất tệ</p>
+                        </li>
+                        <li data-val="2">
+                            <i class="iconcmt-unstarlist active"></i>
+                            <p data-val="2">Tệ</p>
+                        </li>
+                        <li data-val="3">
+                            <i class="iconcmt-unstarlist active"></i>
+                            <p data-val="3">Tạm ổn</p>
+                        </li>
+                        <li data-val="4">
+                            <i class="iconcmt-unstarlist active"></i>
+                            <p data-val="4" class="">Tốt</p>
+                        </li>
+                        <li data-val="5">
+                            <i class="iconcmt-unstarlist active"></i>
+                            <p data-val="5" class="active-slt">Rất tốt</p>
+                        </li>
+                    </ul>
+                    <input class="star-real" hidden value="5"/>
+                    <input class="product-id" hidden value="@Model.ProductDetail?.Id" />
+                    <div class="form-rate">
+                        <div class="inputrating__group">
+                            <textarea class="fRContent" name="fRContent" placeholder="Mời bạn chia sẻ thêm cảm nhận..."></textarea>
+                        </div>
+
+                        <div class="form-column">
+                            <div class="upload__box  ">
+                                <div class="upload__btn-box">
+                                    <label class="upload__btn">
+                                        <a class="send-img">
+                                            <i class="iconcmt-camera"></i>
+                                            <p>Gửi ảnh thực tế <span>(tối đa 3 ảnh)</span></p>
+                                        </a>
+                                        <input id="hdFileRatingUpload" type="file" multiple="" accept="image/x-png, image/gif, image/jpeg" class="upload__inputfile hide">
+                                    </label>
+                                </div>
+                                <div class="upload__img-wrap"></div>
+                            </div>
+                        </div>
+
+                        <button type="button" id="submitrt" class="submit send-rate">Gửi đánh giá</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      @* <div class="related acc">
+         <p class="related__ttl">
+            <span>Sản phẩm thường mua cùng</span>
+            <a href="/phu-kien/dtdd/iphone-15-pro-max">Xem tất cả</a>
+         </p>
+         <div class="box-scroll p-slide">
+            <div class="listproduct owl-carousel owl-loaded owl-drag" data-item="5">
+               <div class="owl-stage-outer">
+                  <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 2400px;">
+                     <div class="owl-item active" style="width: 240px;">
+                        <div class="item" data-id="314856" data-pos="1">
+                           <a href="/op-lung-flipcover/op-lung-magsafe-iphone-15-promax-nhua-cung-pc-laut-crystal-matter-x-crystal" data-s="Nomal" data-site="2" data-pro="3" data-cache="False" data-sv="webtgdd-26-85" data-name="Ốp lưng MagSafe iPhone 15 Pro Max Nhựa cứng PC LAUT CRYSTAL MATTER X Chính hãng" data-id="314856" data-price="430000.0" data-brand="Laut" data-cate="Ốp lưng đ.thoại" data-box="BoxCate" class="main-contain " data-pos="0">
+                              <div class="item-label">
+                              </div>
+                              <div class="item-img item-img_60">
+                                 <img class="thumb lazyloaded" data-src="https://cdn.tgdd.vn/Products/Images/60/314856/op-lung-magsafe-iphone-15-promax-nhua-cung-pc-laut-crystal-matter-x-crystal-thumb-600x600.jpg" alt="Ốp lưng MagSafe iPhone 15 Pro Max Nhựa cứng PC LAUT CRYSTAL MATTER X" src="https://cdn.tgdd.vn/Products/Images/60/314856/op-lung-magsafe-iphone-15-promax-nhua-cung-pc-laut-crystal-matter-x-crystal-thumb-600x600.jpg">
+                              </div>
+                              <h3>
+                                 Ốp lưng MagSafe iPhone 15 Pro Max Nhựa cứng PC LAUT CRYSTAL MATTER X
+                              </h3>
+                              <div class="box-p">
+                                 <p class="price-old black">860.000₫</p>
+                                 <span class="percent">-50%</span>
+                              </div>
+                              <strong class="price">430.000₫</strong>
+                           </a>
+                           <div class="item-bottom">
+                              <a href="#" class="shiping"></a>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="owl-item active" style="width: 240px;">
+                        <div class="item" data-id="291355" data-pos="2">
+                           <a href="/tai-nghe/tai-nghe-bluetooth-true-wireless-ava-ds206" data-s="TwoPriceDetail" data-site="2" data-pro="3" data-cache="False" data-sv="webtgdd-26-85" data-name="Tai nghe Bluetooth True Wireless AVA+ DS206" data-id="291355" data-price="235000.0" data-brand="AVA+" data-cate="Tai nghe" data-box="BoxCate" class="main-contain " data-pos="0">
+                              <div class="item-label">
+                              </div>
+                              <div class="item-img item-img_54">
+                                 <img class="thumb lazyloaded" data-src="https://cdn.tgdd.vn/Products/Images/54/291355/tai-nghe-bluetooth-true-wireless-ava-ds206-thumb-1-600x600.jpg" alt="Tai nghe Bluetooth True Wireless AVA+ DS206" src="https://cdn.tgdd.vn/Products/Images/54/291355/tai-nghe-bluetooth-true-wireless-ava-ds206-thumb-1-600x600.jpg">
+                              </div>
+                              <p class="result-label temp3"><img width="20" height="20" class=" lazyloaded" alt="Giá Rẻ Quá" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/11/content/icon-50x50-9-50x50.png" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/11/content/icon-50x50-9-50x50.png"><span>Giá Rẻ Quá</span></p>
+                              <h3>
+                                 Tai nghe Bluetooth True Wireless AVA+ DS206
+                              </h3>
+                              <p class="item-txt-online"><i></i>Online giá rẻ quá</p>
+                              <div class="box-p">
+                                 <p class="price-old black">790.000₫</p>
+                                 <span class="percent">-70%</span>
+                              </div>
+                              <strong class="price">235.000₫</strong>
+                              <div class="item-rating">
+                                 <p>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star-dark"></i>
+                                 </p>
+                                 <p class="item-rating-total">195</p>
+                              </div>
+                           </a>
+                           <div class="item-bottom">
+                              <a href="#" class="shiping"></a>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="owl-item active" style="width: 240px;">
+                        <div class="item" data-id="308491" data-pos="3">
+                           <a href="/sac-dtdd/sac-du-phong-polymer-5000mah-khong-day-magnetic-typecpd-15w-laut-handy-e33a" data-s="Nomal" data-site="2" data-pro="3" data-cache="False" data-sv="webtgdd-26-85" data-name="Pin sạc dự phòng Polymer 5000mAh không dây Magnetic Type C PD 20W LAUT Handy E33A" data-id="308491" data-price="480000.0" data-brand="Laut" data-cate="Sạc dự phòng" data-box="BoxCate" class="main-contain " data-pos="0">
+                              <div class="item-label">
+                              </div>
+                              <div class="item-img item-img_57">
+                                 <img class="thumb lazyloaded" data-src="https://cdn.tgdd.vn/Products/Images/57/308491/sac-du-phong-polymer-5000mah-khong-day-magnetic-typecpd-15w-laut-handy-e33a-thumb-den-600x600.jpg" alt="LAUT Handy 20W E33A" src="https://cdn.tgdd.vn/Products/Images/57/308491/sac-du-phong-polymer-5000mah-khong-day-magnetic-typecpd-15w-laut-handy-e33a-thumb-den-600x600.jpg">
+                              </div>
+                              <p class="result-label temp3"><img width="20" height="20" class=" lazyloaded" alt="Giá Rẻ Quá" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2024/02/content/icon-50x50-9-50x50.png" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2024/02/content/icon-50x50-9-50x50.png"><span>Giá Rẻ Quá</span></p>
+                              <h3>
+                                 LAUT Handy 20W E33A
+                              </h3>
+                              <div class="box-p">
+                                 <p class="price-old black">960.000₫</p>
+                                 <span class="percent">-50%</span>
+                              </div>
+                              <strong class="price">480.000₫</strong>
+                              <div class="item-rating">
+                                 <p>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star-dark"></i>
+                                 </p>
+                                 <p class="item-rating-total">8</p>
+                              </div>
+                           </a>
+                           <div class="item-bottom">
+                              <a href="#" class="shiping"></a>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="owl-item active" style="width: 240px;">
+                        <div class="item" data-id="289798" data-pos="4">
+                           <a href="/dong-ho-thong-minh/apple-watch-se-2022-44mm-vien-nhom" data-s="Nomal" data-site="2" data-pro="3" data-cache="False" data-sv="webtgdd-26-85" data-name="Đồng hồ thông minh Apple Watch SE 2022 GPS 44mm viền nhôm dây thể thao" data-id="289798" data-price="6590000.0" data-brand="Apple" data-cate="Đồng hồ thông minh" data-box="BoxCate" class="main-contain " data-pos="0">
+                              <div class="item-label">
+                              </div>
+                              <div class="item-img item-img_7077">
+                                 <img class="thumb lazyloaded" data-src="https://cdn.tgdd.vn/Products/Images/7077/289798/apple-watch-se-2022-44mm-vien-nhom-trang-thumbn-600x600.jpg" alt="Apple Watch SE 2022 GPS 44mm viền nhôm dây thể thao" src="https://cdn.tgdd.vn/Products/Images/7077/289798/apple-watch-se-2022-44mm-vien-nhom-trang-thumbn-600x600.jpg">
+                              </div>
+                              <h3>
+                                 Apple Watch SE 2022 GPS 44mm viền nhôm dây thể thao
+                              </h3>
+                              <div class="box-p">
+                                 <p class="price-old black">8.490.000₫</p>
+                                 <span class="percent">-22%</span>
+                              </div>
+                              <strong class="price">6.590.000₫</strong>
+                              <div class="item-rating">
+                                 <p>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                 </p>
+                                 <p class="item-rating-total">134</p>
+                              </div>
+                           </a>
+                           <div class="item-bottom">
+                              <a href="#" class="shiping"></a>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="owl-item active" style="width: 240px;">
+                        <div class="item" data-id="308532" data-pos="5">
+                           <a href="/cap-dien-thoai/cap-type-c-type-c-1-25m-mazer-c2c125" data-s="Nomal" data-site="2" data-pro="3" data-cache="False" data-sv="webtgdd-26-85" data-name="Cáp Type C - Type C  1.25m Mazer C2C125" data-id="308532" data-price="280000.0" data-brand="Mazer" data-cate="Cáp sạc" data-box="BoxCate" class="main-contain " data-pos="0">
+                              <div class="item-label">
+                              </div>
+                              <div class="item-img item-img_58">
+                                 <img class="thumb lazyloaded" data-src="https://cdn.tgdd.vn/Products/Images/58/308532/cap-type-c-type-c-1-25m-mazer-c2c125-thumb-1-600x600.jpg" alt="Cáp Type C - Type C 1.25m Mazer C2C125" src="https://cdn.tgdd.vn/Products/Images/58/308532/cap-type-c-type-c-1-25m-mazer-c2c125-thumb-1-600x600.jpg">
+                              </div>
+                              <p class="result-label temp3"><img width="20" height="20" class=" lazyloaded" alt="Giá Rẻ Quá" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2024/02/content/icon-50x50-9-50x50.png" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2024/02/content/icon-50x50-9-50x50.png"><span>Giá Rẻ Quá</span></p>
+                              <h3>
+                                 Cáp Type C - Type C 1.25m Mazer C2C125
+                              </h3>
+                              <div class="box-p">
+                                 <p class="price-old black">470.000₫</p>
+                                 <span class="percent">-40%</span>
+                              </div>
+                              <strong class="price">280.000₫</strong>
+                              <div class="item-rating">
+                                 <p>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star-dark"></i>
+                                 </p>
+                                 <p class="item-rating-total">8</p>
+                              </div>
+                           </a>
+                           <div class="item-bottom">
+                              <a href="#" class="shiping"></a>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="owl-item" style="width: 240px;">
+                        <div class="item" data-id="232815" data-pos="6">
+                           <a href="/adapter-sac/sac-xmobile-tc20w?utm_flashsale=1" data-s="OnlineSavingCMS" data-site="2" data-pro="3" data-cache="False" data-sv="webtgdd-26-85" data-name="Adapter Sạc Type C PD 20W Xmobile TC20W" data-id="232815" data-price="130000.0" data-brand="Xmobile" data-cate="Adapter sạc" data-box="BoxCate" class="main-contain " data-pos="0">
+                              <div class="item-label">
+                              </div>
+                              <div class="item-img item-img_9499">
+                                 <img class="thumb lazyloaded" data-src="https://cdn.tgdd.vn/Products/Images/9499/232815/adapter-sac-type-c-pd-20w-xmobile-tc20w-trang-avatar-1-600x600.jpg" alt="Sạc Xmobile TC20W" src="https://cdn.tgdd.vn/Products/Images/9499/232815/adapter-sac-type-c-pd-20w-xmobile-tc20w-trang-avatar-1-600x600.jpg">
+                              </div>
+                              <p class="result-label temp3"><img width="20" height="20" class=" ls-is-cached lazyloaded" alt="Giá Rẻ Quá" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2024/02/content/icon-50x50-9-50x50.png" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2024/02/content/icon-50x50-9-50x50.png"><span>Giá Rẻ Quá</span></p>
+                              <h3>
+                                 Sạc Xmobile TC20W
+                              </h3>
+                              <p class="item-txt-online"><i></i>Online giá rẻ quá</p>
+                              <div class="box-p">
+                                 <p class="price-old black">220.000₫</p>
+                                 <span class="percent">-40%</span>
+                              </div>
+                              <strong class="price">130.000₫</strong>
+                           </a>
+                           <div class="item-bottom">
+                              <a href="#" class="shiping"></a>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="owl-item" style="width: 240px;">
+                        <div class="item" data-id="314756" data-pos="7">
+                           <a href="/mieng-dan-man-hinh/mieng-dan-kinh-cuong-luc-iphone-15-pro-max-jincase?utm_flashsale=1" data-s="TwoPriceDetailCMS" data-site="2" data-pro="3" data-cache="False" data-sv="webtgdd-26-85" data-name="Miếng dán kính cường lực iPhone 15 Pro Max Jincase" data-id="314756" data-price="150000.0" data-brand="Jincase" data-cate="Miếng dán" data-box="BoxCate" class="main-contain " data-pos="0">
+                              <div class="item-label">
+                              </div>
+                              <div class="item-img item-img_1363">
+                                 <img class="thumb lazyloaded" data-src="https://cdn.tgdd.vn/Products/Images/1363/314756/mieng-dan-kinh-cuong-luc-iphone-15-pro-max-jincase-thumb-600x600.jpg" alt="Miếng dán kính cường lực iPhone 15 Pro Max Jincase" src="https://cdn.tgdd.vn/Products/Images/1363/314756/mieng-dan-kinh-cuong-luc-iphone-15-pro-max-jincase-thumb-600x600.jpg">
+                              </div>
+                              <h3>
+                                 Miếng dán kính cường lực iPhone 15 Pro Max Jincase
+                              </h3>
+                              <p class="item-txt-online"><i></i>Online giá rẻ quá</p>
+                              <div class="box-p">
+                                 <p class="price-old black">220.000₫</p>
+                                 <span class="percent">-31%</span>
+                              </div>
+                              <strong class="price">150.000₫</strong>
+                              <div class="item-rating">
+                                 <p>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star-dark"></i>
+                                 </p>
+                                 <p class="item-rating-total">27</p>
+                              </div>
+                           </a>
+                           <div class="item-bottom">
+                              <a href="#" class="shiping"></a>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="owl-item" style="width: 240px;">
+                        <div class="item" data-id="319251" data-pos="8">
+                           <a href="/op-lung-flipcover/op-magsafe-iphone-15-pro-max-da-pu-alu-uniq-hybrid-charging-lyden-grey" data-s="Nomal" data-site="2" data-pro="3" data-cache="False" data-sv="webtgdd-26-85" data-name="Ốp lưng MagSafe iPhone 15 Pro Max Da PU Alu UNIQ HYBRID MAGCLICK CHARGING LYDEN Chính hãng" data-id="319251" data-price="437000.0" data-brand="UNIQ" data-cate="Ốp lưng đ.thoại" data-box="BoxCate" class="main-contain " data-pos="0">
+                              <div class="item-label">
+                              </div>
+                              <div class="item-img item-img_60">
+                                 <img class="thumb lazyloaded" data-src="https://cdn.tgdd.vn/Products/Images/60/319251/op-magsafe-iphone-15-pro-max-da-pu-alu-uniq-hybrid-charging-lyden-grey-thumb-600x600.jpg" alt="Ốp lưng MagSafe iPhone 15 Pro Max Da PU Alu UNIQ HYBRID MAGCLICK CHARGING LYDEN" src="https://cdn.tgdd.vn/Products/Images/60/319251/op-magsafe-iphone-15-pro-max-da-pu-alu-uniq-hybrid-charging-lyden-grey-thumb-600x600.jpg">
+                              </div>
+                              <h3>
+                                 Ốp lưng MagSafe iPhone 15 Pro Max Da PU Alu UNIQ HYBRID MAGCLICK CHARGING LYDEN
+                              </h3>
+                              <div class="box-p">
+                                 <p class="price-old black">729.000₫</p>
+                                 <span class="percent">-40%</span>
+                              </div>
+                              <strong class="price">437.000₫</strong>
+                           </a>
+                           <div class="item-bottom">
+                              <a href="#" class="shiping"></a>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="owl-item" style="width: 240px;">
+                        <div class="item" data-id="310173" data-pos="9">
+                           <a href="/tai-nghe/tai-nghe-bluetooth-true-wireless-ava-freego-plus-pt19?utm_flashsale=1" data-s="OnlineSavingCMS" data-site="2" data-pro="3" data-cache="False" data-sv="webtgdd-26-85" data-name="Tai nghe Bluetooth True Wireless AVA+ FreeGo Plus PT19" data-id="310173" data-price="175000.0" data-brand="AVA+" data-cate="Tai nghe" data-box="BoxCate" class="main-contain " data-pos="0">
+                              <div class="item-label">
+                              </div>
+                              <div class="item-img item-img_54">
+                                 <img class="thumb lazyloaded" data-src="https://cdn.tgdd.vn/Products/Images/54/310173/tai-nghe-bluetooth-true-wireless-ava-freego-plus-pt19-310723-044131-600x600.jpg" alt="Tai nghe Bluetooth True Wireless AVA+ FreeGo Plus PT19" src="https://cdn.tgdd.vn/Products/Images/54/310173/tai-nghe-bluetooth-true-wireless-ava-freego-plus-pt19-310723-044131-600x600.jpg">
+                              </div>
+                              <p class="result-label temp3"><img width="20" height="20" class=" ls-is-cached lazyloaded" alt="Giá Rẻ Quá" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/11/content/icon-50x50-9-50x50.png" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/11/content/icon-50x50-9-50x50.png"><span>Giá Rẻ Quá</span></p>
+                              <h3>
+                                 Tai nghe Bluetooth True Wireless AVA+ FreeGo Plus PT19
+                              </h3>
+                              <p class="item-txt-online"><i></i>Online giá rẻ quá</p>
+                              <div class="box-p">
+                                 <p class="price-old black">390.000₫</p>
+                                 <span class="percent">-55%</span>
+                              </div>
+                              <strong class="price">175.000₫</strong>
+                              <div class="item-rating">
+                                 <p>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star-dark"></i>
+                                 </p>
+                                 <p class="item-rating-total">168</p>
+                              </div>
+                           </a>
+                           <div class="item-bottom">
+                              <a href="#" class="shiping"></a>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="owl-item" style="width: 240px;">
+                        <div class="item" data-id="240697" data-pos="10">
+                           <a href="/sac-dtdd/ava-pj-jp192" data-s="Nomal" data-site="2" data-pro="3" data-cache="False" data-sv="webtgdd-26-85" data-name="Pin sạc dự phòng Polymer 10.000 mAh 12W AVA+ PJ JP192" data-id="240697" data-price="190000.0" data-brand="AVA+" data-cate="Sạc dự phòng" data-box="BoxCate" class="main-contain " data-pos="0">
+                              <div class="item-label">
+                              </div>
+                              <div class="item-img item-img_57">
+                                 <img class="lazyload thumb" data-src="https://cdn.tgdd.vn/Products/Images/57/240697/ava-pj-jp192-thumb-600x600.jpeg" alt="AVA+ 12W PJ JP192">
+                              </div>
+                              <p class="result-label temp3"><img width="20" height="20" class="lazyload" alt="Giá Rẻ Quá" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2024/02/content/icon-50x50-9-50x50.png"><span>Giá Rẻ Quá</span></p>
+                              <h3>
+                                 AVA+ 12W PJ JP192
+                              </h3>
+                              <div class="box-p">
+                                 <p class="price-old black">380.000₫</p>
+                                 <span class="percent">-50%</span>
+                              </div>
+                              <strong class="price">190.000₫</strong>
+                              <div class="item-rating">
+                                 <p>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star-dark"></i>
+                                 </p>
+                                 <p class="item-rating-total">370</p>
+                              </div>
+                           </a>
+                           <div class="item-bottom">
+                              <a href="#" class="shiping"></a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="owl-nav"><button type="button" role="presentation" class="owl-prev disabled"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div>
+               <div class="owl-dots disabled"></div>
+            </div>
+         </div>
+      </div> *@
+   </div>
+</div>
+<script src="/js/Views/Product.js"></script>

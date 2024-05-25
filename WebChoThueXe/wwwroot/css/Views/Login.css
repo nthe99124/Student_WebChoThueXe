@@ -1,0 +1,21 @@
+﻿/*.modal-content {
+    padding: 20px;
+    border: 1px solid black;
+    width: 400px;
+}*/
+.login-action, .register-action {
+    width: 100%
+}
+
+
+#vpt-main-login {
+    min-height: 100vh;
+}
+
+.align-items-stretch {
+    align-items: stretch !important;
+}
+#vpt-main-login .left-container {
+    background: url(/images/hinh-nen-o-to-69.jpg) no-repeat scroll 50% transparent;
+    background-size: cover;
+}

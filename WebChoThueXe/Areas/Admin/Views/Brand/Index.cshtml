@@ -1,0 +1,51 @@
+﻿@model IEnumerable<BrandModel>
+@{
+    ViewData["title"] = "Brand Listed";
+}
+<div class="title d-flex-space-between">
+    <h3>Danh sách thương hiệu</h3>
+    <a asp-action="Create" class="btn btn-success" asp-controller="Brand">Thêm thương hiệu<i class="bi bi-file-earmark-plus"></i></a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Tên thương hiệu</th>
+            <th scope="col">Mô tả</th>
+            <th scope="col">Slug thương hiệu</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.Id</th>
+                <td>@item.Name</td>
+                <td>@Html.Raw(@item.Description)</td>
+                <td>@item.Slug</td>
+                <td>
+                    @if (@item.Status == 1)
+                    {
+                        <span class="text text-success">Hiển Thị</span>
+                    }
+                    else
+                    {
+                        <span class="text text-danger">Ẩn</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-success btn-sm" asp-controller="Brand" asp-route-Id="@item.Id">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"  style="scale: 1.5;"></i>
+                    </a>
+                    <a asp-action="Delete" class="btn btn-info btn-sm confirmDeletion" asp-controller="Brand" asp-route-Id="@item.Id">
+                        <i class="fa fa-trash-o" aria-hidden="true"  style="scale: 1.5;"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="/js/base/paging.js"></script>

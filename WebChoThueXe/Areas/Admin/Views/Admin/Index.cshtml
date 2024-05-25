@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<UserModel> UserManager
+@{
+    bool isAdmin = User.Identity.IsAuthenticated && UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin").Result;
+}
+<div class="container">
+
+    <table class="table table-bordered table-hover" style="border: 5px solid black; text-align:center;">
+        <thead>
+            <tr>
+                <th scope="col">Tên tài khoản</th>
+                <th scope="col">Chức vụ</th>
+                <th scope="col">Cập nhật chức vụ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="align-middle">@item.UserName</td>
+                    <td class="align-middle">@item.Name</td>
+                    <td class="align-middle" style="text-align: right;">
+                        <form asp-controller="Admin" asp-action="UpdateUserRole" method="post">
+                            <input type="hidden" name="userId" value="@item.UserId" />
+                            <div class="form-floating mb-3">
+                                <select name="roleId" class="form-select border-0" aria-required="true" onchange="this.form.submit()">
+                                    <option disabled selected>Select Role</option>
+                                    @foreach (var role in ViewBag.Role)
+                                    {
+                                        <option value="@role.Value">@role.Text</option>
+                                    }
+                                </select>
+                            </div>
+                        </form>
+                    </td>
+                    <td class="align-middle">
+
+                        <form asp-controller="Admin" asp-action="DeleteUser" method="post">
+                            <input type="hidden" name="userId" value="@item.UserId" />
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

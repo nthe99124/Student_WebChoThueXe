@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ProductModel>
+@{
+    ViewData["title"] = "Product Listed";
+}
+<div class="title d-flex-space-between">
+    <h3>Danh sách sản phẩm</h3>
+    <a asp-action="Create" class="btn btn-success" asp-controller="Product">Thêm sản phẩm<i class="bi bi-file-earmark-plus"></i></a>
+</div>
+
+<div class="table-responsive" style="padding-top: 20px;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Mô tả</th>
+                <th scope="col">Giá</th>
+                <th scope="col">Hình ảnh</th>
+                <th scope="col">Slug sản phẩm</th>
+                <th scope="col">Danh mục</th>
+                <th scope="col">Thương hiệu</th>
+                <th scope="col">Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.Id</th>
+                    <td>@item.Name</td>
+                    <td>@Html.Raw(@item.Description)</td>
+                    <td>@item.Price</td>
+                    <td><img src="~/media/products/@item.Image" style="width:214px; height:140px;"></td>
+                    <td>@item.Slug</td>
+                    <td>@item.Category.Name</td>
+                    <td>@item.Brand.Name</td>
+                    <td>
+                        <a asp-action="Edit" class="btn btn-success btn-sm" asp-controller="Product" asp-route-Id="@item.Id">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"  style="scale: 1.5;"></i>
+                        </a>
+                        <a asp-action="Delete" class="btn btn-info btn-sm confirmDeletion" asp-controller="Product" asp-route-Id="@item.Id">
+                            <i class="fa fa-trash-o" aria-hidden="true" style="scale: 1.5;"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script src="/js/base/paging.js"></script>

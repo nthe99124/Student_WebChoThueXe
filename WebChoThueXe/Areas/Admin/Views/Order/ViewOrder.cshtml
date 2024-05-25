@@ -1,0 +1,36 @@
+﻿@model IEnumerable<OrderDetails>
+@{
+    ViewData["title"] = "Order Details";
+}
+<h3>List Order</h3>
+<table class="table">
+    <thead>
+        <tr>
+            @* <th scope="col">ID</th> *@
+            <th scope="col">ID</th>
+            <th scope="col">Order Code</th>
+            <th scope="col">Username</th>
+            <th scope="col">Order ProductId</th>
+            <th scope="col">Order Price</th>
+            <th scope="col">Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.Id</th>
+                <th scope="row">@item.OrderCode</th>
+                <td>@item.UserName</td>
+                <td>@item.ProductId</td>
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+
+            </tr>
+        @* <td class="cart_total">
+            <p class="cart_total_price">@Model.CartItems.Where(x => x.ProductId == @item.ProductId).Sum(x => x.Quantity*x.Price).ToString()</p>
+        </td> *@
+        }
+    </tbody>
+</table>
+

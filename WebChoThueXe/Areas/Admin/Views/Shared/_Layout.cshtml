@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>@ViewData["title"] - Admin Areas</title>
+	<link href="~/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+	<link href="~/css/prettyPhoto.css" rel="stylesheet">
+	<link href="~/css/price-range.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+	<link href="~/css/animate.css" rel="stylesheet">
+	<link href="~/css/main.css" rel="stylesheet">
+	<link href="~/css/responsive.css" rel="stylesheet">
+	<link href="~/css/layout.css" rel="stylesheet">
+	<link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/WebChoThueXe.styles.css" asp-append-version="true" />
+	<link rel="shortcut icon" href="images/ico/favicon.ico">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+	<link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
+	<script src="~/js/jquery.js"></script>
+	<script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+</head>
+
+<body>
+	<section class="header line-header scroll-top">
+		<div class="m-container">
+			<div class="full-logo">
+				<a href="index.html"><img src="/images/logocarrental.png" style="width:214px; height:140px;" alt="" /></a>
+			</div>
+			<div class="menu-container menu-icon-box">
+				<a asp-controller="Product" asp-action="Index">Sản phẩm</a>
+				<div class="vertical-line"></div>
+				<a asp-controller="Category" asp-action="Index">Danh mục</a>
+				<div class="vertical-line"></div>
+				<a asp-controller="Brand" asp-action="Index">Thương hiệu</a>
+				<div class="vertical-line"></div>
+				<a asp-controller="Order" asp-action="Index">Đơn hàng</a>
+				<div class="vertical-line"></div>
+				@if(User.Identity?.IsAuthenticated ?? false)
+				{
+					<div class="dropdown-profile">
+						<a class="dropdown-profile" href="/account">
+							<div class="avatar avatar--s">
+								<img loading="lazy" src="https://n1-astg.mioto.vn/g/2024/04/21/23/w9FfrljWmtSKyfiXeoDQQw.jpg">
+							</div>
+							<span class="name">@User.Identity?.Name</span>
+							<div class="wrap-svg arrow-infor">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<path d="M16.8998 9.20039C16.4998 8.80039 15.8998 8.80039 15.4998 9.20039L11.9998 12.7004L8.4998 9.20039C8.0998 8.80039 7.4998 8.80039 7.0998 9.20039C6.6998 9.60039 6.6998 10.2004 7.0998 10.6004L11.2998 14.8004C11.4998 15.0004 11.6998 15.1004 11.9998 15.1004C12.2998 15.1004 12.4998 15.0004 12.6998 14.8004L16.8998 10.6004C17.2998 10.2004 17.2998 9.60039 16.8998 9.20039Z" fill="black"></path>
+								</svg>
+							</div>
+						</a>
+						<div class="wrap-svg tab-menu">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M5 6H19" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+								<path d="M5 18H19" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+								<path d="M5 12H19" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+							</svg>
+						</div>
+					</div>
+				}
+				else
+				{
+					<a class="btn btn--s sign-in" href="/Account/Create">Đăng ký</a>
+					<a class="btn btn--s" href="/Account/Login">Đăng nhập</a>
+				}
+
+				@if(User.Identity?.IsAuthenticated ?? false)
+				{
+					<div class="dropdown user-dropdown corner-triangle top-right radius-10">
+						<ul class="user-dropdown-menu radius-10"><li class="dropdown-user-info">
+							<a href="javascript:;" class="radius-top-10">
+								<div class="clearfix">
+									<div class="user-image float-start" style="float:left">
+										<img src="https://4user.net/uploads/user_image/placeholder.png" alt="">
+									</div>
+									<div class="user-details">
+										<div class="user-name">@User.Identity?.Name</div>
+										<div class="user-email">
+										</div>
+									</div>
+								</div>
+							</a>
+							</li>
+							<li class="user-dropdown-menu-item">
+								<a asp-controller="Product" asp-action="Index">Sản phẩm</a>
+							</li>
+							<li class="user-dropdown-menu-item">
+								<a asp-controller="Category" asp-action="Index">Danh mục</a>
+							</li>
+							<li class="user-dropdown-menu-item">
+								<a asp-controller="Brand" asp-action="Index">Thương hiệu</a>
+							</li>
+							<li class="user-dropdown-menu-item">
+								<a asp-controller="Order" asp-action="Index">Đơn hàng</a>
+							</li>
+							<li class="dropdown-user-logout user-dropdown-menu-item radius-bottom-10">
+								<a class="radius-bottom-10 py-3" href="/Account/Logout">
+									<i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+							</li>
+						</ul>
+					</div>
+				}
+
+				<div class="menu-mobile open move-left">
+					<div class="header-menu">
+						<div class="close-menu">×</div>
+						</div>
+					<div class="m-container">
+						<div class="menu-list">
+							@if(User.Identity?.IsAuthenticated ?? false)
+							{
+								<a class="menu-avatar" href="/account">
+									<div class="avatar avatar--s">
+										<img loading="lazy" src="https://n1-astg.mioto.vn/g/2024/04/21/23/w9FfrljWmtSKyfiXeoDQQw.jpg">
+									</div>
+									<span class="name">@User.Identity?.Name</span>
+								</a>
+							}
+							else
+							{
+								<a class="menu-list__item" href="/Account/Login">Đăng nhập</a>
+								<div class="line-page"></div>
+								<a class="menu-list__item" href="/Account/Create">Đăng ký</a>
+							}
+							<div class="line-page"></div>
+							<a class="menu-list__item"  asp-controller="Product" asp-action="Index">Sản phẩm</a>
+							<div class="line-page"></div>
+							<a class="menu-list__item"  asp-controller="Category" asp-action="Index">Danh mục</a>
+							<div class="line-page"></div>
+							<a class="menu-list__item"  asp-controller="Brand" asp-action="Index">Thương hiệu</a>
+							<div class="line-page"></div>
+							<a class="menu-list__item"  asp-controller="Order" asp-action="Index">Đơn hàng</a>
+						</div>
+						@if(User.Identity?.IsAuthenticated ?? false)
+						{
+							<a class="menu-logout" href="/Account/Logout">
+								<div class="wrap-svg">
+									<i class="fa fa-sign-out" aria-hidden="true"></i>
+								</div>Đăng xuất
+							</a>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section>
+		<div class="container" style="padding-top: 20px;">
+			<div class="row">
+				@Html.Partial("_NotificationPartial")
+				@RenderBody()
+			</div>
+		</div>
+	</section>
+
+	<footer id="footer">
+		<!--Footer-->
+
+	</footer><!--/Footer-->
+
+	<script src="~/js/bootstrap.min.js"></script>
+	<script src="~/js/jquery.scrollUp.min.js"></script>
+	<script src="~/js/price-range.js"></script>
+	<script src="~/js/jquery.prettyPhoto.js"></script>
+	<script src="~/js/main.js"></script>
+	<script src="~/backend/js/site.js"></script>
+	<script src="~/js/Views/_layout.js"></script>
+	@await RenderSectionAsync("Scripts",required:false)
+</body>
+</html>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<OrderModel>
+@{
+    ViewData["title"] = "Order Listed";
+}
+<h3>Danh sách đơn hàng</h3>
+<table class="table">
+    <thead>
+        <tr>
+            @* <th scope="col">ID</th> *@            
+            <th scope="col">Mã đơn hàng</th>
+            <th scope="col">Username</th>          
+            <th scope="col">Ngày đặt</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                
+                <th scope="row">@item.OrderCode</th>
+                <td>@item.UserName</td>
+                <td>@item.CreatedDate</td>
+                <td>
+                    @if (@item.Status == 1)
+                    {
+                        <span class="text text-success">Đơn Hàng Mới </span>
+                    }
+                    else
+                    {
+                        <span class="text text-danger">Đơn Hàng Thành Công</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="ViewOrder" class="btn btn-success btn-sm" asp-controller="Order" asp-route-ordercode="@item.OrderCode">
+                        <i class="fa fa-eye" aria-hidden="true" style="scale: 1.5;"></i>
+                    </a>
+                    <a asp-action="Delete" class="btn btn-info btn-sm confirmDeletion" asp-controller="Order" asp-route-Id="@item.OrderCode">
+                        <i class="fa fa-trash-o" aria-hidden="true" style="scale: 1.5;"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script src="/js/base/paging.js"></script>
