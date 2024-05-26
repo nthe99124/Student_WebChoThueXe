@@ -7390,6 +7390,7 @@ div::-webkit-scrollbar-track {
 
 .search-input {
     padding: 12px;
+    height: 35px;
     border-radius: 8px;
     border: 2px solid #e0e0e0;
     display: -webkit-box;
@@ -40166,4 +40167,9 @@ span.deposit-1, span.deposit-2, span.deposit-3, span.deposit-4, span.deposit-5 {
 }
 .radius-10 {
     border-radius: 10px !important;
+}
+
+.search-box {
+    padding-left: 15px;
+    padding-right: 15px;
 }

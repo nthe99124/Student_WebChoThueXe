@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
-using Microsoft.EntityFrameworkCore;
 using WebChoThueXe.Models;
-using WebChoThueXe.Models.ViewModels;
+using WebChoThueXe.Models.ViewModels.StoriesProject.Model.ViewModel;
 using WebChoThueXe.Repository;
 
 namespace WebChoThueXe.Controllers
@@ -151,5 +148,36 @@ namespace WebChoThueXe.Controllers
             fs.Close();
 			return imageName;
         }
-    }
+
+		[HttpGet]
+		public JsonResult GetProductByName(string name, int? category, int? brand)
+		{
+			var userId = _userManage.GetUserId(User);
+			var productByBrand = (from p in _dataContext.Products
+								 join b in _dataContext.Brands on p.BrandId equals b.Id
+								 join c in _dataContext.Categories on p.CategoryId equals c.Id
+								 where ((!string.IsNullOrWhiteSpace(name) && p.Name.ToLower().Contains(name.ToLower())) || string.IsNullOrWhiteSpace(name))
+								   && ((category != null && p.CategoryId == category) || category == null)
+								   && ((brand != null && p.CategoryId == brand) || brand == null)
+								  orderby p.Id descending
+								 select new ProductViewModel
+								 {
+									 Id = p.Id,
+									 Name = p.Name,
+									 Slug = p.Slug,
+									 Description = p.Description,
+									 Price = p.Price,
+									 BrandId = b.Id,
+									 CategoryId = p.CategoryId,
+									 BrandName = b.Name,
+									 CategoryName = c.Name,
+									 Image = p.Image,
+									 IsFavorite = _dataContext.ProductFavorite.Any(pf => pf.ProductId == p.Id && pf.AccountId == userId),
+									 Star = _dataContext.Ratings.Where(r => r.ProductId == p.Id).Average(r => (double?)r.Star) ?? 0
+								 }).ToList();
+			var res = new RestPagingOutput<ProductViewModel>();
+			res.SuccessEventHandler(productByBrand);
+			return Json(res);
+		}
+	}
 }
